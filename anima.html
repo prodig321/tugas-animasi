@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Animasi Pendek - 3 Objek dengan Easing Function</title>
+</head>
+<body>
+    <div class="container">
+        <!-- OBJEK 1: Circle dengan animasi bounce dan scale -->
+        <div class="circle"></div>
+
+        <!-- OBJEK 2: Square dengan animasi slide horizontal dan rotate -->
+        <div class="square"></div>
+
+        <!-- OBJEK 3: Triangle dengan animasi fade, scale, dan translate vertical -->
+        <div class="triangle"></div>
+
+        <!-- Informasi animasi -->
+        <div class="info">
+            <h3>Penjelasan Animasi</h3>
+            <p><span>Objek 1 (Persegi):</span> Slide Horizontal (3.5s, cubic-bezier)</p>
+            <p><span>Objek 2 (Lingkaran):</span> Bounce + Scale (4s, ease-in-out)</p>
+            <p><span>Objek 3 (Segitiga):</span> Fade + Scale (4s, ease-out)</p>
+        </div>
+
+        <!-- Tombol reset animasi -->
+        <button class="reset-btn" onclick="resetAnimation()">Reset</button>
+    </div>
+
+    <script>
+        // Fungsi untuk reset animasi dengan menghapus dan menambah kembali class animation
+        function resetAnimation() {
+            const elements = document.querySelectorAll('.circle, .square, .triangle');
+            
+            // Hapus animasi dengan menghapus class
+            elements.forEach(el => {
+                el.style.animation = 'none';
+            });
+            
+            // Trigger reflow untuk reset animasi
+            document.body.offsetHeight;
+            
+            // Tambahkan kembali animasi
+            elements.forEach(el => {
+                el.style.animation = '';
+            });
+        }
+
+        // Optional: Auto reset setiap 4 detik jika diperlukan
+        // setInterval(resetAnimation, 4000);
+    </script>
+</body>
+<style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            width: 100%;
+            height: 100vh;
+            background: #444444;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-family: Poppins, sans-serif;
+            overflow: hidden;
+        }
+
+        .container {
+            position: relative;
+            width: 600px;
+            height: 400px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            backdrop-filter: blur(10px);
+            border: 2px solid rgba(255, 255, 255, 0.2);
+        }
+
+        /* === OBJEK 1: CIRCLE (Bounce + Scale) === */
+        /* Animasi dengan easing cubic-in-out (ease-in-out) untuk effect bounce */
+        .circle {
+            position: absolute;
+            width: 80px;
+            height: 80px;
+            background: radial-gradient(circle at 30% 30%, #FFD700, #FFA500);
+            border-radius: 50%;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            animation: bounceAnimation 4s ease-in-out infinite;
+        }
+
+        /* Keyframes untuk animasi bounce dan scale circle */
+        @keyframes bounceAnimation {
+            0% {
+                /* Posisi awal: di tengah, skala normal */
+                transform: translate(-50%, -50%) scale(1);
+                opacity: 1;
+            }
+            25% {
+                /* Melompat ke atas dengan scale membesar */
+                transform: translate(-50%, -150%) scale(1.2);
+                opacity: 1;
+            }
+            50% {
+                /* Kembali ke posisi tengah, scale normal */
+                transform: translate(-50%, -50%) scale(1);
+                opacity: 1;
+            }
+            75% {
+                /* Melompat ke bawah dengan scale mengecil */
+                transform: translate(-50%, 50%) scale(0.8);
+                opacity: 0.8;
+            }
+            100% {
+                /* Kembali ke posisi dan skala awal */
+                transform: translate(-50%, -50%) scale(1);
+                opacity: 1;
+            }
+        }
+
+        /* === OBJEK 2: SQUARE (Slide Horizontal) === */
+        /* Animasi dengan easing cubic-bezier untuk gerakan smooth horizontal */
+        .square {
+            position: absolute;
+            width: 70px;
+            height: 70px;
+            background: linear-gradient(45deg, #FF6B6B, #FF8E53);
+            top: 80px;
+            left: 50%;
+            transform: translateX(-35px);
+            animation: slideHorizontalAnimation 3.5s cubic-bezier(0.68, -0.55, 0.265, 1.55) infinite;
+        }
+
+        /* Keyframes untuk animasi slide horizontal square */
+        @keyframes slideHorizontalAnimation {
+            0% {
+                /* Posisi awal: kiri */
+                left: 10%;
+                opacity: 1;
+            }
+            50% {
+                /* Tengah-tengah: di tengah */
+                left: 20%;
+                opacity: 1;
+            }
+            100% {
+                /* Akhir: kanan */
+                left: 10%;
+                opacity: 1;
+            }
+        }
+
+        /* === OBJEK 3: TRIANGLE (Fade + Scale + Translate Vertical) === */
+        /* Animasi dengan easing ease-out untuk transisi yang smooth */
+        .triangle {
+            position: absolute;
+            width: 0;
+            height: 0;
+            border-left: 40px solid transparent;
+            border-right: 40px solid transparent;
+            border-bottom: 80px solid #00D4FF;
+            bottom: 60px;
+            right: 80px;
+            animation: fadeScaleAnimation 4s ease-out infinite;
+        }
+
+        /* Keyframes untuk animasi fade, scale, dan translate vertical triangle */
+        @keyframes fadeScaleAnimation {
+            0% {
+                /* Awal: opacity penuh, skala normal, posisi normal */
+                opacity: 1;
+                transform: scale(1) translateY(0);
+            }
+            50% {
+                /* Tengah: opacity berkurang, skala membesar, bergerak ke atas */
+                opacity: 0.6;
+                transform: scale(1.3) translateY(-80px);
+            }
+            100% {
+                /* Akhir: opacity penuh, skala kembali normal, posisi normal */
+                opacity: 1;
+                transform: scale(1) translateY(0);
+            }
+        }
+
+        /*text penjelasan*/
+        .info {
+            position: absolute;
+            bottom: 20px;
+            left: 20px;
+            color: white;
+            font-size: 12px;
+            line-height: 1.6;
+            opacity: 0.8;
+        }
+
+        .info h3 {
+            margin-bottom: 10px;
+            font-size: 14px;
+        }
+
+        .info p {
+            margin: 3px 0;
+        }
+
+        .info span {
+            color: #FFD700;
+            font-weight: bold;
+        }
+
+        .reset-btn {
+            position: absolute;
+            bottom: 20px;
+            right: 20px;
+            padding: 10px 20px;
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            border: 2px solid white;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: all 0.3s ease;
+        }
+
+        .reset-btn:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: scale(1.05);
+        }
+
+        .reset-btn:active {
+            transform: scale(0.95);
+        }
+</style>
+</html>
